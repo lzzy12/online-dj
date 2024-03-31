@@ -6,8 +6,7 @@ import { Route, RouterProvider, Routes, createBrowserRouter } from 'react-router
 import MusicPlayer from './components/MusicPlayer'
 import SocketContextProvider from './context/socket_context'
 import {QueryClient, QueryClientProvider} from 'react-query'
-import { Navbar } from '@nextui-org/react'
-import AppNavbar from './components/navbar'
+import { ToastContainer } from 'react-toastify'
 
 
 const reactQueryClient = new QueryClient()
@@ -15,11 +14,12 @@ function App() {
   return <RecoilRoot>
     <SocketContextProvider>
       <QueryClientProvider client={reactQueryClient} >
-      <AppNavbar />
       <Routes>
         <Route path="/" element={<HomePage/>}/>
         <Route path="/music" element={<MusicPlayer/>}/>
       </Routes>
+      <ToastContainer />
+
       </QueryClientProvider>
       </SocketContextProvider>
   </RecoilRoot>

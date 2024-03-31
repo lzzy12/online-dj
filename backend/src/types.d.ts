@@ -1,6 +1,7 @@
 export type PlayerAction = {
-  action: 'play' | 'pause' | 'resume' | 'next' | 'prev';
-  assetUrl?: string;
+  songUrl: string;
+  imageUrl?: string;
+  provider: 'jio' | 'others';
   positionInSec?: number;
   roomId: string;
 };

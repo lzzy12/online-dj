@@ -7,6 +7,7 @@ import { useSocketIO } from '../hooks/socketio_connect'
 import { redirect } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { roomState } from '../atoms/room'
+import { ToastContainer } from 'react-toastify'
 
 function HomePage() {
   const {createRoom,joinRoom} = useSocketIO();
@@ -35,7 +36,7 @@ function HomePage() {
           <div className="flex gap-4 relative items-center justify-center text-white">
             {!room.isWaitingForRoomId?<Button color='secondary' className='p-7' onClick={() => {createRoom(); }}>
               <span className="text-white">New Room </span><FontAwesomeIcon icon={faPlus} color={semanticColors.dark.secondary[900]}/>
-            </Button>: <CircularProgress/>}
+            </Button>: <CircularProgress aria-labelledby='loading room'/>}
             <Input type='text' label="Enter room id" onChange={(event) => setRoomIdInput(event.target.value)}/>
             {!room.isWaitingForRoomId? <Button variant='faded' onClick={onJoinClicked}>Join</Button>: <CircularProgress/>}
           </div>

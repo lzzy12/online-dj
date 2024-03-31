@@ -14,6 +14,13 @@ export const socketOnConnection = async (socket: Socket, io: Server) => {
     socket.emit('create', roomId);
   });
   socket.on('join', async (roomId: string) => {
+    if (await db.lLen(`room_admin-${roomId}`) == 0){
+      socket.emit('error', {
+        error: 'Cannot join the room',
+        cause: 'Room does not exist',
+      });
+      return;
+    }
     const lastRoom = await db.get(socket.id);
     if (lastRoom !== null) socket.leave(lastRoom);
     socket.join(roomId);
@@ -37,9 +44,11 @@ export const socketOnConnection = async (socket: Socket, io: Server) => {
       });
       return;
     }
-    io.to(data.roomId).emit('play', data);
+    console.log("broad")
+    console.log(data)
+    socket.to(data.roomId).emit('play', data);
   });
-  socket.on('pause', async (data: PlayerAction) => {
+  socket.on('pause', async (data: {roomId: string}) => {
     if (!(await checkAdminPermission(data.roomId))) {
       socket.emit('error',{
         error: 'Cannot perform this action',
@@ -47,6 +56,19 @@ export const socketOnConnection = async (socket: Socket, io: Server) => {
       });
       return;
     }
-    io.to(data.roomId).emit('pause', data);
+    console.log('pause event')
+    socket.to(data.roomId).emit('pause', data);
+  });
+  socket.on('resume', async (data: {roomId: string}) => {
+    if (!(await checkAdminPermission(data.roomId))) {
+      socket.emit('error',{
+        error: 'Cannot perform this action',
+        cause: 'Not sufficient permission',
+      });
+      return;
+    }
+
+    console.log('resume')
+    socket.to(data.roomId).emit('resume', data);
   });
 };
