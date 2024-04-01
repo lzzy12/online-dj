@@ -4,7 +4,7 @@ export type RoomState = {
     isWaitingForRoomId: boolean,
     isAdmin: boolean,
 }
-export const roomState = atom<RoomState>({
+export const roomAtom = atom<RoomState>({
     key: 'room-atom',
     default: {
         roomId: null,

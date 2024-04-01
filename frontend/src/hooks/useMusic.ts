@@ -2,7 +2,7 @@ import { useRecoilState } from "recoil"
 import { Music, musicAtom } from "../atoms/music"
 import { useContext, useEffect, useRef } from "react";
 import ReactPlayer from "react-player";
-import { roomState } from "../atoms/room";
+import { roomAtom } from "../atoms/room";
 import { SocketContext } from "../context/socket_context";
 import { PlayerAction } from "../typing";
 import { toast } from "react-toastify";
@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 export const useMusic = () => {
     const [musicState, setMusic] = useRecoilState(musicAtom);
     const ref = useRef<ReactPlayer>();
-    const [room, setRoom] = useRecoilState(roomState);
+    const [room, setRoom] = useRecoilState(roomAtom);
     const {socket} = useContext(SocketContext);
     const setVolume = (volume: number) => {
         setMusic({...musicState, volume})

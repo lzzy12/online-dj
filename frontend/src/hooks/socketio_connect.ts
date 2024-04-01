@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import {io, Socket} from 'socket.io-client';
-import { roomState } from '../atoms/room';
+import { roomAtom } from '../atoms/room';
 import { useNavigate } from 'react-router-dom';
 import { SocketContext } from '../context/socket_context';
 import { ToastContainer, toast } from 'react-toastify';
@@ -11,7 +11,7 @@ import { useMusic } from './useMusic';
 import { musicAtom } from '../atoms/music';
 
 export const useSocketIO = () => {
-  const [room, setRoom] = useRecoilState(roomState);
+  const [room, setRoom] = useRecoilState(roomAtom);
   const endpoint = 'ws://localhost:3001';
   const {socket, setSocket} = useContext(SocketContext);
   console.log('useSocket');
@@ -79,7 +79,7 @@ export const useSocketIO = () => {
 
 
 export const useCheckRoomJoined = () => {
-  const [room] = useRecoilState(roomState);
+  const [room] = useRecoilState(roomAtom);
   const {socket} = useContext(SocketContext);
   const redirect = useNavigate();
   useEffect(() => {

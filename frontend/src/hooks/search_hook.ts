@@ -10,58 +10,32 @@ export interface TopSearchResult {
     image: string;
     perma_url: string;
 }
+
 export interface SongDetails {
-    "320kbps": string;
-    album: string;
-    album_url: string;
-    albumid: string;
-    copyright_text: string;
-    duration: string;
-    encrypted_drm_media_url: string;
-    encrypted_media_path: string;
-    encrypted_media_url: string;
-    featured_artists: string;
-    featured_artists_id: string;
-    has_lyrics: string;
+    name: string;
     id: string;
     image: string;
-    is_dolby_content: boolean;
-    is_drm: number;
-    label: string;
-    label_url: string;
-    language: string;
-    lyrics_snippet: string;
-    media_preview_url: string;
-    media_url: string;
-    music: string;
-    music_id: string;
-    origin: string;
-    perma_url: string;
-    play_count: number;
-    primary_artists: string;
-    primary_artists_id: string;
-    release_date: string;
-    singers: string;
-    song: string;
-    starred: string;
-    starring: string;
-    type: string;
-    year: string;
+    creators: string;
+    srcUrl: string;
+    provider: 'jio' | 'others';
 }
 type SearchSongsParams = {
     query: string;
 }
-const baseUrl = 'http://localhost:5100/result/'
-const client = new axios.Axios({baseURL: baseUrl, withCredentials: false});
-const saavnClient = new axios.Axios()
+const baseUrl = 'http://localhost:3001/'
+const client = new axios.Axios({
+    baseURL: baseUrl,
+    withCredentials: false,
+})
 const searchSongs = async (params: SearchSongsParams): Promise<SongDetails[]> => {
-    const res = await fetch(baseUrl + '?' + new URLSearchParams({
-        query: params.query
-    }), {
-        method: "GET",
-
+    const res = await client.get('/search', {
+        withCredentials: false,
+        params: {
+            query: params.query
+        }
     });
-    return (await res.json() ?? []) as SongDetails[];
+    const data = JSON.parse(res.data);
+    return (data ?? []) as SongDetails[];
 }
 
 const fetchTopSearches = async (): Promise<TopSearchResult[]> => {
@@ -73,9 +47,7 @@ const fetchTopSearches = async (): Promise<TopSearchResult[]> => {
     });
     console.log("fetched")
     const data = await res.json()
-    console.log(data);
-    console.log(typeof(data))
-    return (data ?? []) as TopSearchResult[];
+    return (JSON.parse(data) ?? []) as TopSearchResult[];
 }
 
 // const fetchSongDetails = async() : Promise<SongDetails> => {
@@ -93,9 +65,9 @@ export const useSearch = () => {
       }, 500)
     }
     const [focussed, setFocussed] = useState<boolean>(false);
-    const {data: searchData, isLoading: searchLoading} = useQuery<SongDetails[], Error>([`search-${query}`], () => searchSongs({query}), {
+    const {data: searchData, isLoading: searchLoading, isError: isSearchError} = useQuery<SongDetails[], Error>([`search-${query}`], () => searchSongs({query}), {
         enabled: !!query && focussed
     });
-    
-    return {searchData, searchLoading, focussed, setFocussed, query, setQuery, onQueryChanged};
+    console.log(searchData);
+    return {isSearchError, searchData, searchLoading, focussed, setFocussed, query, setQuery, onQueryChanged};
 }

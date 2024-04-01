@@ -6,12 +6,12 @@ import React, { useState } from 'react'
 import { useSocketIO } from '../hooks/socketio_connect'
 import { redirect } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
-import { roomState } from '../atoms/room'
+import { roomAtom } from '../atoms/room'
 import { ToastContainer } from 'react-toastify'
 
 function HomePage() {
   const {createRoom,joinRoom} = useSocketIO();
-  const [room] = useRecoilState(roomState);
+  const [room] = useRecoilState(roomAtom);
   const [roomIdInput, setRoomIdInput] = useState<string | null>(null);
 
   const onJoinClicked = () => {

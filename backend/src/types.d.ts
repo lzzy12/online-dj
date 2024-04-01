@@ -10,3 +10,10 @@ export type ActionError = {
   message: string;
   cause: string;
 };
+
+export type MessageData = {
+  message: string;
+  roomId: string;
+  nickname: string;
+  id: string;
+}
