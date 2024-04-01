@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { BASE_URL } from "../secrets";
 
 export interface TopSearchResult {
     id: string;
@@ -22,7 +23,8 @@ export interface SongDetails {
 type SearchSongsParams = {
     query: string;
 }
-const baseUrl = 'http://localhost:3001/'
+const baseUrl = import.meta.env.VITE_SERVER_URL;
+console.log(baseUrl)
 const client = new axios.Axios({
     baseURL: baseUrl,
     withCredentials: false,

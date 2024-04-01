@@ -1,8 +1,9 @@
 import {createClient} from 'redis';
+import { REDIS_URL } from './secrets';
 
 
 export const client = createClient({
-  url: 'redis://default:mypass@20.197.55.120:6379/',
+  url: REDIS_URL,
 })
   .on('error', e => console.log(e))
   .connect();

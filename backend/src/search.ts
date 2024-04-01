@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import axios from 'axios';
 import { client } from './redisClient';
-import { YOUTUBE_DATA_API_KEY } from '.';
 import { SongDetails } from './typings';
+import { DATA_API_KEY } from './secrets';
 
 const router = Router();
 
@@ -15,9 +15,10 @@ router.get('/search', async (req, res) => {
     // Regex to match YouTube video URL
     const youtubeRegex = /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})$/;
     const match = (query as string).match(youtubeRegex);
-
+    console.log(match);
     if (!match) {
         try {
+            console.log("Searching in JioSaavn")
             // Call the default endpoint to fetch the result from JioSaavn
             const response = await axios.get('http://localhost:5100/result/', {
                 params: {
@@ -59,7 +60,7 @@ router.get('/search', async (req, res) => {
                 params: {
                     part: 'snippet',
                     id: videoId,
-                    key: YOUTUBE_DATA_API_KEY
+                    key: DATA_API_KEY
                 }
             });
             const videoDetails = response.data.items[0].snippet;
