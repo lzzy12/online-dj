@@ -1,6 +1,6 @@
 import {Server, Socket} from 'socket.io';
 import {v4 as uuidV4} from 'uuid';
-import {PlayerAction, ActionError} from './types';
+import {PlayerAction, ActionError, MessageData} from './types';
 import {client} from './redisClient';
 
 export const socketOnConnection = async (socket: Socket, io: Server) => {
@@ -71,4 +71,17 @@ export const socketOnConnection = async (socket: Socket, io: Server) => {
     console.log('resume')
     socket.to(data.roomId).emit('resume', data);
   });
+
+  socket.on('message', async (data: MessageData) => {
+    if ((await db.get(socket.id) ) !== data.roomId){
+      socket.emit('error', {
+        error: 'Cannot send message',
+        cause: 'You are not a participant of this room'
+      });
+      return;
+    }
+    data['id'] = socket.id;
+    console.log("Sending message");
+    socket.to(data.roomId).emit('message', data);
+  })
 };
