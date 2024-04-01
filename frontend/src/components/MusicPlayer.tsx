@@ -1,20 +1,17 @@
-import { faBackward, faBackwardStep, faForwardStep, faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
+import {  faBackwardStep, faForwardStep, faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
 import AppNavbar from './navbar'
-import { useRecoilState } from 'recoil'
-import { musicAtom } from '../atoms/music'
 import { Image, Slider } from '@nextui-org/react'
 import ReactPlayer from 'react-player/lazy'
-import { useCheckRoomJoined, useSocketIO } from '../hooks/socketio_connect'
+import { useCheckRoomJoined} from '../hooks/socketio_connect'
 import { useMusic } from '../hooks/useMusic'
 import ChatComponent from './Chat'
-import useChat from '../hooks/useChat'
 
 function MusicPlayer() {
   useCheckRoomJoined();
-  const { pause, ref, togglePlay, playing, currentMusic, duration, position, onProgress, muted, onDuration, durationInSecs, onSeeking, onSeekCapture, positionInSecs} = useMusic();
-  const {messages, sendMessage} = useChat();
+  const { ref, togglePlay, playing, currentMusic, duration,
+     position, onProgress, muted, onDuration, durationInSecs,
+      onSeeking, onSeekCapture, positionInSecs} = useMusic();
 
   // console.log(currentMusic.sr)
   return (
@@ -28,7 +25,7 @@ function MusicPlayer() {
               <ReactPlayer ref={ref} url={currentMusic.srcUrl} playing={playing} onProgress={onProgress} height={0} width={0} muted={muted} onDuration={onDuration}/>
             </div>
           ) : (
-            <ReactPlayer ref={ref} url={currentMusic?.srcUrl?? null} playing={playing} onProgress={onProgress} height={'100%'} width={'100%'} muted={muted} onDuration={onDuration}/>
+            <ReactPlayer ref={ref} url={currentMusic?.srcUrl as string?? null} playing={playing} onProgress={onProgress} height={'100%'} width={'100%'} muted={muted} onDuration={onDuration}/>
           )
        }</div>
       <div className='w-1/3 h-3/4 ml-4'><ChatComponent/></div>

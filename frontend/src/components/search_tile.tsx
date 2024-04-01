@@ -1,5 +1,3 @@
-import React from 'react'
-import { SongDetails } from '../hooks/search_hook'
 import { Card, Image } from '@nextui-org/react'
 
 

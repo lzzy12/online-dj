@@ -1,13 +1,10 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import {io, Socket} from 'socket.io-client';
+import {io} from 'socket.io-client';
 import { roomAtom } from '../atoms/room';
 import { useNavigate } from 'react-router-dom';
 import { SocketContext } from '../context/socket_context';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { PlayerAction } from '../typing';
-import { useMusic } from './useMusic';
 import { musicAtom } from '../atoms/music';
 
 export const useSocketIO = () => {
@@ -16,8 +13,7 @@ export const useSocketIO = () => {
   const {socket, setSocket} = useContext(SocketContext);
   console.log('useSocket');
   const redirect = useNavigate();
-  const {changeMusic, pause, resume: resumeMusic, togglePlay} = useMusic()
-  const [musicState, setMusicState] = useRecoilState(musicAtom)
+  const [musicState] = useRecoilState(musicAtom)
   useEffect(() => {
     // Establish a connection to the Socket.IO server
     const socket = io(endpoint, {transports: ['websocket']});

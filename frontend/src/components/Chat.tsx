@@ -5,7 +5,6 @@ import {
   MessageContainer,
   MessageList,
   MessageHeader,
-  Message
 } from "@minchat/react-chat-ui";
 import useChat from "../hooks/useChat";
 function ChatComponent() {

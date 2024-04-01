@@ -1,6 +1,4 @@
-import React from 'react'
-import { SongDetails } from '../hooks/search_hook'
-import { Card, Image, Skeleton } from '@nextui-org/react'
+import { Card, Skeleton } from '@nextui-org/react'
 
 
 function SearchSkeletonTile() {

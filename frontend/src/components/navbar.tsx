@@ -1,5 +1,4 @@
-import { Input, Navbar, NavbarContent, NavbarItem, Snippet } from '@nextui-org/react'
-import React from 'react'
+import {Snippet } from '@nextui-org/react'
 import SearchBar from './SearchBar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRecoilState } from 'recoil'

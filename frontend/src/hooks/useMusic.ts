@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 export const useMusic = () => {
     const [musicState, setMusic] = useRecoilState(musicAtom);
-    const ref = useRef<ReactPlayer>();
+    const ref = useRef<ReactPlayer>(null);
     const [room, setRoom] = useRecoilState(roomAtom);
     const {socket} = useContext(SocketContext);
     const setVolume = (volume: number) => {

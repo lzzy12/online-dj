@@ -1,7 +1,6 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
-import { BASE_URL } from "../secrets";
 
 export interface TopSearchResult {
     id: string;
@@ -40,17 +39,17 @@ const searchSongs = async (params: SearchSongsParams): Promise<SongDetails[]> =>
     return (data ?? []) as SongDetails[];
 }
 
-const fetchTopSearches = async (): Promise<TopSearchResult[]> => {
-    const res = await fetch('https://www.jiosaavn.com/api.php?__call=content.getTopSearches&ctx=web6dot0&api_version=4&_format=json&_marker=0', {
-        mode: "no-cors",
-        headers: {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
-        }
-    });
-    console.log("fetched")
-    const data = await res.json()
-    return (JSON.parse(data) ?? []) as TopSearchResult[];
-}
+// const fetchTopSearches = async (): Promise<TopSearchResult[]> => {
+//     const res = await fetch('https://www.jiosaavn.com/api.php?__call=content.getTopSearches&ctx=web6dot0&api_version=4&_format=json&_marker=0', {
+//         mode: "no-cors",
+//         headers: {
+//             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+//         }
+//     });
+//     console.log("fetched")
+//     const data = await res.json()
+//     return (JSON.parse(data) ?? []) as TopSearchResult[];
+// }
 
 // const fetchSongDetails = async() : Promise<SongDetails> => {
     

@@ -2,12 +2,10 @@ import { Button, Chip, CircularProgress, Image, Input, semanticColors } from '@n
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeadphones, faPlus } from '@fortawesome/free-solid-svg-icons'
 import coverImg from '../assets/dj_home.jpeg'
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { useSocketIO } from '../hooks/socketio_connect'
-import { redirect } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { roomAtom } from '../atoms/room'
-import { ToastContainer } from 'react-toastify'
 
 function HomePage() {
   const {createRoom,joinRoom} = useSocketIO();

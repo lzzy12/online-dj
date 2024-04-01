@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect} from 'react';
 import { useRecoilState } from 'recoil';
 import { MessageData, chatAtom } from '../atoms/chat';
 import { SocketContext } from '../context/socket_context';
