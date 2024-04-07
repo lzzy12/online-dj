@@ -1,0 +1,3 @@
+[submodule "backend/JioSaavn"]
+	path = backend/JioSaavn
+	url = https://github.com/lzzy12/JioSaavnAPI
