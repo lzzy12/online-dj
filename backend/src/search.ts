@@ -2,7 +2,7 @@ import { Router } from 'express';
 import axios from 'axios';
 import { client } from './redisClient';
 import { SongDetails } from './typings';
-import { DATA_API_KEY } from './secrets';
+import { DATA_API_KEY, JIO_SAAVN_API } from './secrets';
 
 const router = Router();
 
@@ -20,7 +20,7 @@ router.get('/search', async (req, res) => {
         try {
             console.log("Searching in JioSaavn")
             // Call the default endpoint to fetch the result from JioSaavn
-            const response = await axios.get('http://localhost:5100/result/', {
+            const response = await axios.get(`${JIO_SAAVN_API}/result/`, {
                 params: {
                     'query': query,
                 },

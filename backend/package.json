@@ -21,13 +21,11 @@
     "uuid": "^9.0.1"
   },
   "scripts": {
-    "start": "npx nodemon ./src/index.ts",
+    "start": "tsc && npx nodemon ./src/index.ts",
+    "build": "tsc",
     "lint": "gts lint",
     "clean": "gts clean",
-    "compile": "tsc",
     "fix": "gts fix",
-    "prepare": "npm.cmd run compile",
-    "pretest": "npm.cmd run compile",
-    "posttest": "npm.cmd run lint"
+    "posttest": "npm run lint"
   }
 }
