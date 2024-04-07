@@ -9,7 +9,7 @@ import { musicAtom } from '../atoms/music';
 
 export const useSocketIO = () => {
   const [room, setRoom] = useRecoilState(roomAtom);
-  const endpoint = 'ws://localhost:3001';
+  const endpoint = import.meta.env.VITE_SERVER_URL;
   const {socket, setSocket} = useContext(SocketContext);
   console.log('useSocket');
   const redirect = useNavigate();
