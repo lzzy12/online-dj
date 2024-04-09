@@ -28,9 +28,9 @@ function MusicPlayer() {
             <ReactPlayer ref={ref} url={currentMusic?.srcUrl as string?? null} playing={playing} onProgress={onProgress} height={'100%'} width={'100%'} muted={muted} onDuration={onDuration}/>
           )
        }</div>
-      <div className='w-1/3 h-3/4 ml-4'><ChatComponent/></div>
+      <div className='w-1/3 h-96 ml-4'><ChatComponent/></div>
     </div>
-      <div className='mt-auto bg-[#212121] w-svw h-24'>
+      <div className='mt-auto bg-[#212121] w-svw h-24 top'>
         <div className='flex first:mr-auto last:ml-auto relative h-full justify-evenly'>
           <div className="flex w-64 justify-between left-4 ml-4 items-center">
             <FontAwesomeIcon icon={faBackwardStep} size={'2x'}/>

@@ -1,6 +1,7 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { useQuery } from "react-query";
+import { toast } from "react-toastify";
 
 export interface TopSearchResult {
     id: string;
@@ -28,15 +29,21 @@ const client = new axios.Axios({
     baseURL: baseUrl,
     withCredentials: false,
 })
+
 const searchSongs = async (params: SearchSongsParams): Promise<SongDetails[]> => {
-    const res = await client.get('/search', {
-        withCredentials: false,
-        params: {
-            query: params.query
+        const res = await client.get('/search', {
+            withCredentials: false,
+            params: {
+                query: params.query
+            }
+        });
+        if (res.status >= 400) {
+            console.log(res.data);
+            throw new Error(res.data?.error ?? "Something went wrong"); // Throw a custom error message
         }
-    });
-    const data = JSON.parse(res.data);
-    return (data ?? []) as SongDetails[];
+        console.log(res.status);
+        const data = JSON.parse(res.data);
+        return (data ?? []) as SongDetails[];
 }
 
 // const fetchTopSearches = async (): Promise<TopSearchResult[]> => {
@@ -52,23 +59,23 @@ const searchSongs = async (params: SearchSongsParams): Promise<SongDetails[]> =>
 // }
 
 // const fetchSongDetails = async() : Promise<SongDetails> => {
-    
+
 // }
 
 export const useSearch = () => {
     const [query, setQuery] = useState<string>('');
     var timer: number | undefined;
     const onQueryChanged = (value: string) => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        console.log(query)
-        setQuery(value);
-      }, 500)
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            console.log(query)
+            setQuery(value);
+        }, 500)
     }
     const [focussed, setFocussed] = useState<boolean>(false);
-    const {data: searchData, isLoading: searchLoading, isError: isSearchError} = useQuery<SongDetails[], Error>([`search-${query}`], () => searchSongs({query}), {
-        enabled: !!query && focussed
+    const { data: searchData, isLoading: searchLoading, isError: isSearchError } = useQuery<SongDetails[], Error>([`search-${query}`], () => searchSongs({ query }), {
+        enabled: !!query && focussed,
+        onError: (err) => err
     });
-    console.log(searchData);
-    return {isSearchError, searchData, searchLoading, focussed, setFocussed, query, setQuery, onQueryChanged};
+    return { isSearchError, searchData, searchLoading, focussed, setFocussed, query, setQuery, onQueryChanged };
 }
