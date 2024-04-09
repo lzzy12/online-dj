@@ -1,7 +1,6 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { toast } from "react-toastify";
 
 export interface TopSearchResult {
     id: string;
