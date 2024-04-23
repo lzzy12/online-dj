@@ -16,6 +16,6 @@ FROM nginx:alpine
 WORKDIR /usr/local/bin
 
 COPY --from=prod /app/dist /usr/share/nginx/html
-
+COPY nginx.conf /etc/nginx/conf.d
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
