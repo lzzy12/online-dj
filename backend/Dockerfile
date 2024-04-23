@@ -40,6 +40,4 @@ COPY JioSaavn ./JioSaavn
 
 EXPOSE 3001
 
-EXPOSE 5100
-
 CMD [ "./start.sh" ]
