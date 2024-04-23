@@ -1,3 +1,3 @@
 #!/bin/sh
-node src/index.js &
+npm build && node build/src/index.js &
 python3 JioSaavn/app.py
